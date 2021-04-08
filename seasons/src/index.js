@@ -6,17 +6,18 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = { lat: null , errorMessage: '' };
+  }
 
+  // refactor to use componentDidMount() {}
+
+  componentDidMount() {
     window.navigator.geolocation.getCurrentPosition(
-      (position) => {
-        // we called state
-        this.setState({ lat: position.coords.latitude });
-      }, 
-      (err) => {
-        this.setState({ errorMessage: err.message });
-      }
+      position => this.setState({ lat: position.coords.latitude }), 
+      err => this.setState({ errorMessage: err.message })
     );
   }
+
+
   // React says we have to define render!!
   render() {
     if (this.state.errorMessage && !this.state.lat) {
