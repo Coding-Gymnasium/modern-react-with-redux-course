@@ -12,10 +12,10 @@ class App extends React.Component {
       err => this.setState({ errorMessage: err.message })
     );
   }
+ 
+  // helper method ⬇️
 
-
-  // React says we have to define render!!
-  render() {
+  renderContent() {
     if (this.state.errorMessage && !this.state.lat) {
       return <div> Error: {this.state.errorMessage}</div>
     }
@@ -24,6 +24,14 @@ class App extends React.Component {
     }
 
     return <Spinner message="Please accept location request" />;
+  }
+
+  render() {
+    return (
+      <div className="border red">
+        {this.renderContent()}
+      </div>
+    );
   }
 }
 
