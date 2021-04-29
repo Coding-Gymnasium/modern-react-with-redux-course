@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const Search = () => {
-  const [term, setTerm] = useState('');
+  const [term, setTerm] = useState('Trondheim');
+  const [results, setResults] = useState([]);
 
   useEffect(() => {
     const search = async () => {
-      await axios.get('https://en.wikipedia.org/w/api.php?', {
+      const { data } = await axios.get('https://en.wikipedia.org/w/api.php?', {
         params: {
           action: 'query',
           list: 'search',
@@ -15,6 +16,7 @@ const Search = () => {
           srsearch: term
         }
       });
+      setResults(data);
     };
     search();
   }, [term]);
