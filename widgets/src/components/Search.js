@@ -7,19 +7,32 @@ const Search = () => {
 
   useEffect(() => {
     const search = async () => {
-      const { data } = await axios.get('https://en.wikipedia.org/w/api.php?', {
+      const { data } = await axios.get('https://en.wikipedia.org/w/api.php', {
         params: {
           action: 'query',
           list: 'search',
           origin: '*',
           format: 'json',
-          srsearch: term
+          srsearch: term,
         }
       });
-      setResults(data);
+      setResults(data.query.search);
     };
     search();
   }, [term]);
+
+  const renderedResults = results.map((result) => {
+    return (
+      <div key={results.pageid} className='item'>
+        <div className='content'>
+          <div className='header'>
+            {result.title}
+          </div>
+          {result.snippet}
+        </div>
+      </div>
+    );
+  });
 
   return (
     <div>
@@ -32,6 +45,9 @@ const Search = () => {
             className='input' 
           />
         </div>
+      </div>
+      <div className='ui celled list'>
+        {renderedResults}
       </div>
     </div>
   );
